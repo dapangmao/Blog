@@ -25,6 +25,7 @@ Since Spark is fast evolving, I need to maintain a minimal Spark cluster for the
 I simply compare two cloud service provider: AWS and DigitalOcean. Both have nice Python-based monitoring tools([Boto](https://github.com/boto/boto) for AWS and [python-digitalocean](https://github.com/koalalorenzo/python-digitalocean) for DigitalOcean). 
 
 1. From storage to computation
+
     Hadoop's S3 is a great storage to keep data and load it into the Spark/EC2 cluster. Or the Spark cluster on EC2 can directly read S3 bucket such as s3n://file. On DigitalOcean, I have to upload data to the cluster's HDFS. 
 
 2. DevOps tools:
