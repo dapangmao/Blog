@@ -49,10 +49,10 @@ I simply compare two cloud service provider: AWS and DigitalOcean. Both have nic
          - Cons: small memory(each as 2GB memory); have to install Spark manually
           
 ###Add Spark to DigitalOcean cluster
-Tom Faulhaber has [a quick bash script](http://www.infolace.com/blog/2015/02/27/create-an-ad-hoc-spark-cluster/) for deployment. I write it into a [fabfile](https://github.com/dapangmao/Blog/blob/master/Deploy%20a%20minimal%20Spark%20cluster/fabfile.py) for [Python's Fabric](http://www.fabfile.org/). 
+Tom Faulhaber has [a quick bash script](http://www.infolace.com/blog/2015/02/27/create-an-ad-hoc-spark-cluster/) for deployment. To install Spark 1.3.0, I write it into a [fabfile](https://github.com/dapangmao/Blog/blob/master/Deploy%20a%20minimal%20Spark%20cluster/fabfile.py) for [Python's Fabric](http://www.fabfile.org/). 
 Then all the deployment onto the DigitOcean is just one command line. 
 ```python
 # 10.1.2.3 is the internal IP address of the master
 fab -H 10.1.2.3 deploy_spark 
 ```
-The post above is stored at [Github](https://github.com/dapangmao/Blog/tree/master/Deploy%20a%20minimal%20Spark%20cluster)
+The post above is at [Github](https://github.com/dapangmao/Blog/tree/master/Deploy%20a%20minimal%20Spark%20cluster)
