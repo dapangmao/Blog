@@ -6,7 +6,7 @@ Since Spark is fast evolving, I need to maintain a minimal Spark cluster for the
 
 1. Intranet speed
    
-   The cluster should easily copy the data from one server to another. MapReduce always shuffles a large chunk of data  throughout the HDFS. The hard disk should be SSD.
+   The cluster should easily copy the data from one server to another. MapReduce always shuffles a large chunk of data  throughout the HDFS. It's best that the hard disk is SSD.
 
 2. Elasticity and scalability
 
@@ -14,7 +14,7 @@ Since Spark is fast evolving, I need to maintain a minimal Spark cluster for the
 
 3. Locality of Hadoop
 
-   Most importantly, the Hadoop cluster and the Spark cluster should have one-to-one mapping relationship. The computation and the storage should always be on the same machine. 
+   Most importantly, the Hadoop cluster and the Spark cluster should have one-to-one mapping relationship. The computation and the storage should always be on the same machines. 
 
 | Hadooop  | Cluster Manager |  Spark | MapReduce | 
 |----------|:-------------:|------:|-------:|
@@ -44,8 +44,7 @@ I simply compare two cloud service provider: AWS and DigitalOcean. Both have nic
          - Mesos
          - OpenVPN
       - A minimal cluster with 1 master and 3 slaves will be consist of 4 2GB/2CPUs droplets 
-         - Pros: as low as $0.12 per hour; Mesos provide fine-grained control over the cluster(down to 0.1 CPU and 16MB memory);
-                VPN plays a significant role to assure the security
+         - Pros: as low as $0.12 per hour; Mesos provide fine-grained control over the cluster(down to 0.1 CPU and 16MB memory); VPN guarantees the security
          - Cons: small memory(each as 2GB memory); have to install Spark manually
           
 ###Add Spark to DigitalOcean cluster
