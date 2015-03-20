@@ -1,23 +1,20 @@
-###Why a minimal cluster
-1. Testing:
-   
-2. Prototyping
+
 
 ###Requirements
 
-I need a  cluster that lives short time and handles ad-hoc requests of data analysis, or more specificly, running Spark. I want it to be quickly created to load data to memory. And I don't want to keep the cluster perpetually. Therefore, a public cloud may be the best fit for my demand. 
+Since Spark is fast evolving, I need to maintain a minimal Spark cluster for the purpose of testing and prototyping. A public cloud is the best fit for my demand. 
 
 1. Intranet speed
    
-   The cluster should easily copy the data from one server to another. Hadoop always have a large chunk of data shuffling in the HDFS. The hard disk should be SSD.
+   The cluster should easily copy the data from one server to another. MapReduce always shuffles a large chunk of data  throughout the HDFS. The hard disk should be SSD.
 
 2. Elasticity and scalability
 
-   Before scaling the cluter out to more machines, the cloud should have some elasicity to size up or size down 
+   Before scaling the cluster out to more machines, the cloud should have some elasticity to size up or size down. 
 
 3. Locality of Hadoop
 
-   Most importantly, the Hadoop cluster and the Spark cluter should have one-to-one mapping relationship. 
+   Most importantly, the Hadoop cluster and the Spark cluster should have one-to-one mapping relationship. The computation and the storage should always be on the same machine. 
 
 | Hadooop  | Cluster Manager |  Spark | MapReduce | 
 |----------|:-------------:|------:|-------:|
@@ -25,10 +22,10 @@ I need a  cluster that lives short time and handles ad-hoc requests of data anal
 | Data Node |  Slave   | Executor | Task Tracker | 
 
 ###Choice of public cloud: 
-I simply compare two cloud service provider: AWS and DigitalOcean. Both have Python-based monitoring tools([Boto](https://github.com/boto/boto) for AWS and [python-digitalocean](https://github.com/koalalorenzo/python-digitalocean) for DigitalOcean ) . 
+I simply compare two cloud service provider: AWS and DigitalOcean. Both have nice Python-based monitoring tools([Boto](https://github.com/boto/boto) for AWS and [python-digitalocean](https://github.com/koalalorenzo/python-digitalocean) for DigitalOcean). 
 
 1. From storage to computation
-
+    Hadoop's S3 is a great storage to keep data and load it into the Spark/EC2 cluster. Or the Spark cluster on EC2 can directly read S3 bucket such as s3n://file. On DigitalOcean, I have to upload data to the cluster's HDFS. 
 
 2. DevOps tools:
    * AWS: [spark-ec2.py](https://github.com/apache/spark/blob/master/ec2/spark_ec2.py)
@@ -36,20 +33,26 @@ I simply compare two cloud service provider: AWS and DigitalOcean. Both have Pyt
          - 2 HDFSs: one persistent and one ephemeral
          - Spark 1.3 or any earlier version
          - Spark's stand-alone cluster manager
-      - A minimal cluster with 1 master and 3 slaves will be consist of 4 m1.xlarge instances by default
+      - A minimal cluster with 1 master and 3 slaves will be consist of 4 m1.xlarge EC2 instances 
          - Pros: large memory with each node having 15 GB memory 
          - Cons: not SSD; expensive (cost $0.35 * 6 = $2.1 per hour)
       
-   * Digital Ocean: https://digitalocean.mesosphere.com/
-      - With default setting after runnning it, you will get 
+   * DigitalOcean: https://digitalocean.mesosphere.com/
+      - With default setting after running it, you will get 
          - HDFS
          - no Spark
          - Mesos
-         - VPN: openvpn plays a significant role to assure the security
-         - Pros: 0.12 per hour
-         - Cons: small memory(each as 2GB memory)
-         
-      
+         - OpenVPN
+      - A minimal cluster with 1 master and 3 slaves will be consist of 4 2GB/2CPUs droplets 
+         - Pros: as low as $0.12 per hour; Mesos provide fine-grained control over the cluster(down to 0.1 CPU and 16MB memory);
+                VPN plays a significant role to assure the security
+         - Cons: small memory(each as 2GB memory); have to install Spark manually
+          
 ###Add Spark to DigitalOcean cluster
-
-
+Tom Faulhaber has [a quick bash script](http://www.infolace.com/blog/2015/02/27/create-an-ad-hoc-spark-cluster/) for deployment. I write it into a [fabfile](https://github.com/dapangmao/Blog/blob/master/Deploy%20a%20minimal%20Spark%20cluster/fabfile.py) for [Python's Fabric](http://www.fabfile.org/). 
+Then all the deployment onto the DigitOcean is just one command line. 
+```python
+# 10.1.2.3 is the internal IP address of the master
+fab -H 10.1.2.3 deploy_spark 
+```
+The post above is stored at [Github](https://github.com/dapangmao/Blog/tree/master/Deploy%20a%20minimal%20Spark%20cluster)
