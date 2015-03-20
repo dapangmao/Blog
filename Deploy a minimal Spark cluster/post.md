@@ -55,4 +55,4 @@ Then all the deployment onto the DigitOcean is just one command line.
 # 10.1.2.3 is the internal IP address of the master
 fab -H 10.1.2.3 deploy_spark 
 ```
-**The post and the source codes above are available at my [Github](https://github.com/dapangmao/Blog/tree/master/Deploy%20a%20minimal%20Spark%20cluster)**
+*The source codes above are available at my [Github](https://github.com/dapangmao/Blog/tree/master/Deploy%20a%20minimal%20Spark%20cluster)*
