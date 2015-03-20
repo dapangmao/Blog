@@ -26,7 +26,7 @@ I simply compare two cloud service provider: AWS and DigitalOcean. Both have nic
 
 1. From storage to computation
 
-   Hadoop's S3 is a great storage to keep data and load it into the Spark/EC2 cluster. Or the Spark cluster on EC2 can directly read S3 bucket such as s3n://file. On DigitalOcean, I have to upload data to the cluster's HDFS. 
+   Hadoop's S3 is a great storage to keep data and load it into the Spark/EC2 cluster. Or the Spark cluster on EC2 can directly read S3 bucket such as s3n://file (the speed is acceptable). On DigitalOcean, I have to upload data from local to the cluster's HDFS. 
 
 2. DevOps tools:
    * AWS: [spark-ec2.py](https://github.com/apache/spark/blob/master/ec2/spark_ec2.py)
@@ -45,8 +45,8 @@ I simply compare two cloud service provider: AWS and DigitalOcean. Both have nic
          - Mesos
          - OpenVPN
       - A minimal cluster with 1 master and 3 slaves will be consist of 4 2GB/2CPUs droplets 
-         - Pros: as low as $0.12 per hour; Mesos provide fine-grained control over the cluster(down to 0.1 CPU and 16MB memory); VPN guarantees the security
-         - Cons: small memory(each as 2GB memory); have to install Spark manually
+         - Pros: as low as $0.12 per hour; Mesos provide fine-grained control over the cluster(down to 0.1 CPU and 16MB memory); nice to have VPN to guarantee the security
+         - Cons: small memory(each has 2GB memory); have to install Spark manually
           
 ###Add Spark to DigitalOcean cluster
 Tom Faulhaber has [a quick bash script](http://www.infolace.com/blog/2015/02/27/create-an-ad-hoc-spark-cluster/) for deployment. To install Spark 1.3.0, I write it into a [fabfile](https://github.com/dapangmao/Blog/blob/master/Deploy%20a%20minimal%20Spark%20cluster/fabfile.py) for [Python's Fabric](http://www.fabfile.org/). 
@@ -55,4 +55,4 @@ Then all the deployment onto the DigitOcean is just one command line.
 # 10.1.2.3 is the internal IP address of the master
 fab -H 10.1.2.3 deploy_spark 
 ```
-The post above is at [Github](https://github.com/dapangmao/Blog/tree/master/Deploy%20a%20minimal%20Spark%20cluster)
+The post above is available at [Github](https://github.com/dapangmao/Blog/tree/master/Deploy%20a%20minimal%20Spark%20cluster)
