@@ -16,7 +16,7 @@ Since Spark is rapidly evolving, I need to deploy and maintain a minimal Spark c
 
    Most importantly, the Hadoop cluster and the Spark cluster should have one-to-one mapping relationship like below. The computation and the storage should always be on the same machines. 
 
-| Hadooop  | Cluster Manager |  Spark | MapReduce | 
+| Hadoop  | Cluster Manager |  Spark | MapReduce | 
 |----------|:-------------:|------:|-------:|
 | Name Node |  Master | Driver | Job Tracker | 
 | Data Node |  Slave   | Executor | Task Tracker | 
@@ -26,7 +26,7 @@ I simply compare two cloud service provider: AWS and DigitalOcean. Both have nic
 
 1. From storage to computation
 
-   Hadoop's S3 is a great storage to keep data and load it into the Spark/EC2 cluster. Or the Spark cluster on EC2 can directly read S3 bucket such as s3n://file (the speed is acceptable). On DigitalOcean, I have to upload data from local to the cluster's HDFS. 
+   Hadoop's S3 is a great storage to keep data and load it into the Spark/EC2 cluster. Or the Spark cluster on EC2 can directly read S3 bucket such as s3n://file (the speed is still acceptable). On DigitalOcean, I have to upload data from local to the cluster's HDFS. 
 
 2. DevOps tools:
    * AWS: [spark-ec2.py](https://github.com/apache/spark/blob/master/ec2/spark_ec2.py)
