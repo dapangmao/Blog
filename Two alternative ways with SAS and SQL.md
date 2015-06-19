@@ -166,9 +166,9 @@ The overall thought is break-and-conquer. If we synthesize SAS codes from a scri
 
 #####Direct Read
 
-This time we use the data structure of heap again. To find the k top rows for each group, we just need to prepare the min heaps with the k size for each group. With the smaller values popped out everytime, we finally get the top k values for each group. The optimized time complexity is O(Nlog(k))
+This time we use the data structure of heap again in Python. To find the k top rows for each group, we just need to prepare the min heaps with the k size for each group. With the smaller values popped out everytime, we finally get the top k values for each group. The optimized time complexity is O(Nlog(k))
 
-
+    #In Python
     from sas7bdat import SAS7BDAT
     from heapq import heappush, heappop
     
@@ -209,7 +209,7 @@ In his [blog post](http://www.sas-programming.com/2015/05/fast-sql-moving-averag
 
 The question to find the max or the min is somewhat different other than to find the mean, since for the mean only the mean is memorized, while for the max/min the locations of the past min/max should also be memorized. 
 
-#####Code Genenrator 
+#####Code Generator 
 The strategy is very straighforward: we choose three rows from the table sequentially and calculate the means. The time complexity is O(k*N). The generated SAS code is very lengthy, but the machine should feel very comfortable to read it. 
 
 
