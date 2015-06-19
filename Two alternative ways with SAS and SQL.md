@@ -1,11 +1,5 @@
-
-
-
-
-###Two alternative ways with SAS/SQL
-
 I really appreciate those wonderful comments on my SAS posts by the readers ([1](http://www.sasanalysis.com/2015/02/solve-top-n-questions-in-sassql_3.html), [2](http://www.sasanalysis.com/2012/05/top-10-tips-and-tricks-about-proc-sql.html), [3](http://www.sasanalysis.com/2011/01/top-10-most-powerful-functions-for-proc.html)). They gave me a lot of inspirations. 
-Due to SAS or SQL’s inherent limitation, recently I feel difficult in deal with some extremely large SAS datasets (it means that I exhausted all possible traditional ways). Here I conclude two alternative solutions in the extreme cases as a follow-up to the comments. 
+Due to SAS or SQL’s inherent limitation, recently I feel difficult in deal with some extremely large SAS datasets (it means that I exhausted all possible traditional ways). Here I conclude two alternative solutions in these extreme cases as a follow-up to the comments. 
 
 1.	Direct Read
     - Use a scripting language such as Python to read SAS datasets directly
@@ -58,7 +52,7 @@ The SQL query below is simple and pure that can be ported to any other platform.
 
 >Excellent solution, but maybe PROC UNIVARIATE will get you there faster on a large dataset.
 
-Definately, PROC UNIVARIATE in the best solution in SAS to find the median, which utilizes SAS's built-in powers. 
+Indeed PROC UNIVARIATE is the best solution in SAS to find the median, which utilizes SAS's built-in powers. 
 
 
 ######Direct Read
@@ -344,7 +338,7 @@ Again, if we want to further decrease the time complexity, say O(N), we have to 
 
 ###Conclusion
 
-While data is expanding, we should consider three things using SAS/SQL -
+While data is expanding, we should more and more consider three things -
 
 - Time complexity: we don't want run data for weeks.
 - Space complexity: we don't want the memory overflow. 
