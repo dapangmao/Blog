@@ -6,7 +6,7 @@ Due to SAS or SQL’s inherent limitation, recently I feel difficult in deal wit
 2.	Code Generator 
     - Use SAS or other scripting languages to generate SAS/SQL codes
 
-The example used is still `sashelp.class`, which has 19 rows. The target variable is `weight`.
+The examples still use `sashelp.class`, which has 19 rows. The target variable is `weight`.
 
 
     *In SAS
@@ -31,7 +31,7 @@ you have an intermediate file of size 100 million obs.
 / Br Anders 
 Anders Sköllermo Ph.D., Reuma and Neuro Data Analyst 
 
-The SQL query below is simple and pure that can be ported to any other platform. However, just like what Anders said, it is just too expensive. 
+The SQL query below is simple and pure, so that it can be ported to any other SQL platform. However, just like what Anders said, it is just way too expensive. 
 
 
     *In SAS
