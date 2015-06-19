@@ -5,8 +5,7 @@
 ###Two alternative ways with SAS/SQL
 
 I really appreciate those wonderful comments on my SAS posts by the readers ([1](http://www.sasanalysis.com/2015/02/solve-top-n-questions-in-sassql_3.html), [2](http://www.sasanalysis.com/2012/05/top-10-tips-and-tricks-about-proc-sql.html), [3](http://www.sasanalysis.com/2011/01/top-10-most-powerful-functions-for-proc.html)). They gave me a lot of inspirations. 
-
-Due to SAS or SQL’s inherent limitation, recently I feel difficult in deal with some extremely large SAS datasets (it means that I exhausted all possible traditional ways). Here I conclude two alternative solutions in those cases as the follow-up to the comments. 
+Due to SAS or SQL’s inherent limitation, recently I feel difficult in deal with some extremely large SAS datasets (it means that I exhausted all possible traditional ways). Here I conclude two alternative solutions in the extreme cases as a follow-up to the comments. 
 
 1.	Direct Read
     - Use a scripting language such as Python to read SAS datasets directly
