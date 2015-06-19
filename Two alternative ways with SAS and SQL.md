@@ -63,7 +63,7 @@ Definately, PROC UNIVARIATE in the best solution in SAS to find the median, whic
 
 ######Direct Read
 
-When the extreme cases come, say SAS cannot even open the entire datasets, we may have to use the streaming method to read the sas7bdat file line by line. The sas7bdat format has been decoded by [Java](kasper.eobjects.org/2011/06/sassyreader-open-source-reader-of-sas.html), [R](http://cran.r-project.org/web/packages/sas7bdat/index.html) and [Python](https://pypi.python.org/pypi/sas7bdat). Theoretically we don't need to have SAS to query a SAS dataset.
+When the extreme cases come, say SAS cannot even open the entire dataset, we may have to use the streaming method to read the sas7bdat file line by line. The sas7bdat format has been decoded by [Java](kasper.eobjects.org/2011/06/sassyreader-open-source-reader-of-sas.html), [R](http://cran.r-project.org/web/packages/sas7bdat/index.html) and [Python](https://pypi.python.org/pypi/sas7bdat). Theoretically we don't need to have SAS to query a SAS dataset.
 
 [Heap](https://en.wikipedia.org/wiki/Heap_(data_structure)) is an interesting data structure, which easily finds a min or a max. ream the values, we could build a max heap and a min heap to cut the incoming stream into half in Python. The algorithm looks like a heap sorting. The good news is that it only read one variable each time and thus saves a lot of space.
 
@@ -209,7 +209,7 @@ In his [blog post](http://www.sas-programming.com/2015/05/fast-sql-moving-averag
 The question to find the max or the min is somewhat different other than to find the mean, since for the mean only the mean is memorized, while for the max/min the locations of the past min/max should also be memorized. 
 
 #####Code Generator 
-The strategy is very straighforward: we choose three rows from the table sequentially and calculate the means. The time complexity is O(k*N). The generated SAS code is very lengthy, but the machine should feel very comfortable to read it. 
+The strategy is very straighforward: we choose three rows from the table sequentially and calculate the means. The time complexity is O(k*N). The generated SAS code is very lengthy, but the machine should feel comfortable to read it. 
 
 
 In addition, if we want to save the results, we could insert those maximums to an empty table. 
