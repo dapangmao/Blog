@@ -203,7 +203,7 @@ This time we use the data structure of heap again. To find the k top rows for ea
 
 ####Example 3: Find Moving Window Maxium
 
-At the daily work, I always want to find three statistics for a moving window: mean, max, and min. 
+At the daily work, I always want to find three statistics for a moving window: mean, max, and min. The sheer data size poses challenges. 
 
 In his [blog post](http://www.sas-programming.com/2015/05/fast-sql-moving-average-calculation.html), Liang Xie showed three advanced approaches to calculated the moving averages, including `PROC EXPAND`, `DATA STEP` and `PROC SQL`. Apparently `PROC EXPAND` is the winner throughout the comparison. As conclusion, self-joining is very expensive and always O(N^2) and we should avoid it as much as possible. 
 
