@@ -1,17 +1,12 @@
+I really appreciate those wonderful comments on my SAS posts by the Readingers ([1](http://www.sasanalysis.com/2015/02/solve-top-n-questions-in-sassql_3.html), [2](http://www.sasanalysis.com/2012/05/top-10-tips-and-tricks-about-proc-sql.html), [3](http://www.sasanalysis.com/2011/01/top-10-most-powerful-functions-for-proc.html)). They gave me a lot of inspirations. 
+Due to SAS or SQL’s inherent limitation, recently I feel difficult in deal with some extremely large SAS datasets (it means that I exhausted all possible traditional ways). Here I conclude two alternative solutions in these extreme cases as a follow-up to the comments. 
 
-
-
-
-###Two alternative ways with SAS/SQL
-
-Thanks for the wonderful comments on my SAS posts by the readers ([1](http://www.sasanalysis.com/2015/02/solve-top-n-questions-in-sassql_3.html), [2](http://www.sasanalysis.com/2012/05/top-10-tips-and-tricks-about-proc-sql.html), [3](http://www.sasanalysis.com/2011/01/top-10-most-powerful-functions-for-proc.html)). Due to SQL’s inherent limitation, recently I feel difficult in deal with some extremely large SAS datasets (it means that I exhausted all possible traditional ways). Here I conclude two alternative solutions in those cases as the follow-up to the comments. 
-
-1.	Direct Read
-    - Use a scripting language such as Python to read SAS datasets directly
+1.	Read Directly
+    - Use a scripting language such as Python to Reading SAS datasets directly
 2.	Code Generator 
     - Use SAS or other scripting languages to generate SAS/SQL codes
 
-The example used is still `sashelp.class`, which has 19 rows. The target variable is `weight`.
+The examples still use `sashelp.class`, which has 19 rows. The target variable is `weight`.
 
 
     *In SAS
@@ -36,7 +31,7 @@ you have an intermediate file of size 100 million obs.
 / Br Anders 
 Anders Sköllermo Ph.D., Reuma and Neuro Data Analyst 
 
-The SQL query below is simple and pure that can be ported to any other platform. However, just like what Anders said, it is just too expensive. 
+The SQL query below is simple and pure, so that it can be ported to any other SQL platform. However, just like what Anders said, it is just way too expensive. 
 
 
     *In SAS
@@ -57,14 +52,14 @@ The SQL query below is simple and pure that can be ported to any other platform.
 
 >Excellent solution, but maybe PROC UNIVARIATE will get you there faster on a large dataset.
 
-Definately, PROC UNIVARIATE in the best solution in SAS to find the median, which utilizes SAS's built-in powers. 
+Indeed PROC UNIVARIATE is the best solution in SAS to find the median, which utilizes SAS's built-in powers. 
 
 
-######Direct Read
+######Read Directly
 
-When the extreme cases come, say SAS cannot even open the entire datasets, we may have to use the streaming method to read the sas7bdat file line by line. The sas7bdat format has been decoded by [Java](kasper.eobjects.org/2011/06/sassyreader-open-source-reader-of-sas.html), [R](http://cran.r-project.org/web/packages/sas7bdat/index.html) and [Python](https://pypi.python.org/pypi/sas7bdat). Theoretically we don't need to have SAS to query a SAS dataset.
+When the extreme cases come, say SAS cannot even open the entire dataset, we may have to use the streaming method to Reading the sas7bdat file line by line. The sas7bdat format has been decoded by [Java](kasper.eobjects.org/2011/06/sassyReadinger-open-source-Readinger-of-sas.html), [R](http://cran.r-project.org/web/packages/sas7bdat/index.html) and [Python](https://pypi.python.org/pypi/sas7bdat). Theoretically we don't need to have SAS to query a SAS dataset.
 
-Heap is an interesting data structure, which easily finds a min or a max. ream the values, we could build a max heap and a min heap to cut the incoming stream into half in Python. The algorithm looks like a heap sorting. The good news is that it only read one variable and thus saves a lot of space.
+[Heap](https://en.wikipedia.org/wiki/Heap_(data_structure)) is an interesting data structure, which easily finds a min or a max. ream the values, we could build a max heap and a min heap to cut the incoming stream into half in Python. The algorithm looks like a heap sorting. The good news is that it only Reading one variable each time and thus saves a lot of space.
 
 
     #In Python
@@ -141,8 +136,8 @@ The overall thought is break-and-conquer. If we synthesize SAS codes from a scri
         for x in candidates:
             current = template.format(k, 'class', x)
             print current
-    
-    create_sql(3, ['M', 'F'])
+    if __name__ == "__main__":
+        create_sql(3, ['M', 'F'])
 
     
         proc sql outobs = 3;
@@ -162,11 +157,11 @@ The overall thought is break-and-conquer. If we synthesize SAS codes from a scri
         quit;
 
 
-#####Direct Read
+#####Read Directly
 
-This time we use the data structure of heap again. To find the k top rows for each group, we just need to prepare the min heaps with the k size for each group. With the smaller values popped out everytime, we finally get the top k values for each group. The optimized time complexity is O(Nlog(k))
+This time we use the data structure of heap again in Python. To find the k top rows for each group, we just need to prepare the min heaps with the k size for each group. With the smaller values popped out everytime, we finally get the top k values for each group. The optimized time complexity is O(Nlog(k))
 
-
+    #In Python
     from sas7bdat import SAS7BDAT
     from heapq import heappush, heappop
     
@@ -201,14 +196,14 @@ This time we use the data structure of heap again. To find the k top rows for ea
 
 ####Example 3: Find Moving Window Maxium
 
-At the daily work, I always want to find three statistics for a moving window: mean, max, and min. 
+At the daily work, I always want to find three statistics for a moving window: mean, max, and min. The sheer data size poses challenges. 
 
 In his [blog post](http://www.sas-programming.com/2015/05/fast-sql-moving-average-calculation.html), Liang Xie showed three advanced approaches to calculated the moving averages, including `PROC EXPAND`, `DATA STEP` and `PROC SQL`. Apparently `PROC EXPAND` is the winner throughout the comparison. As conclusion, self-joining is very expensive and always O(N^2) and we should avoid it as much as possible. 
 
 The question to find the max or the min is somewhat different other than to find the mean, since for the mean only the mean is memorized, while for the max/min the locations of the past min/max should also be memorized. 
 
-#####Code Genenrator 
-The strategy is very straighforward: we choose three rows from the table sequentially and calculate the means. The time complexity is O(k*N). The generated SAS code is very lengthy, but the machine should feel very comfortable to read it. 
+#####Code Generator 
+The strategy is very straighforward: we choose three rows from the table sequentially and calculate the means. The time complexity is O(k*N). The generated SAS code is very lengthy, but the machine should feel comfortable to Reading it. 
 
 
 In addition, if we want to save the results, we could insert those maximums to an empty table. 
@@ -227,8 +222,8 @@ In addition, if we want to save the results, we could insert those maximums to a
             current = map(str, range(x, x + 3))
             SQL += template.format(','.join(current))
         print "proc sql;" + SQL + "quit;"
-        
-    create_sql(3, 19)
+    if __name__ == "__main__":
+        create_sql(3, 19)
         
 
     proc sql;
@@ -302,7 +297,7 @@ In addition, if we want to save the results, we could insert those maximums to a
         ;quit;
 
 
-####Direct Read
+####Read Directly
 Again, if we want to further decrease the time complexity, say O(N), we have to use better data structure, such as queue. SAS doesn't have queue, so we may switch to Python. Actually it has two loops which adds up to O(2N). However, it is still better than any other methods. 
 
 
@@ -343,8 +338,8 @@ Again, if we want to further decrease the time complexity, say O(N), we have to 
 
 ###Conclusion
 
-While data is expanding, we should consider three things using SAS/SQL -
+While data is expanding, we should more and more consider three things -
 
 - Time complexity: we don't want run data for weeks.
 - Space complexity: we don't want the memory overflow. 
-- Clean codes: the collegues should easily read and modify the codes.
+- Clean codes: the collegues should easily Reading and modify the codes.
