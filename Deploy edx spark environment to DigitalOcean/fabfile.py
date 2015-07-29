@@ -3,7 +3,7 @@ from fabric.contrib.files import exists
 
 env.hosts = ['104.236.12.85']
 env.user = 'root'
-env.password = 'unix800823'
+env.password = '12345'
 
 PROJECT = 'ipython-spark'
 CURRENT_VERSION = 'spark-1.4.1-bin-hadoop2.6'
