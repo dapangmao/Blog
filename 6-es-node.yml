@@ -1,0 +1,115 @@
+version: '2'
+services:
+  master1:
+    image: my-repo/elasticsearch:5.4.0
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms32g -Xmx32g"
+      - "discovery.zen.ping.unicast.hosts=[master1, master2, master3]"
+      - node.data=false
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+
+  master2:
+    image: my-repo/elasticsearch:5.4.0
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms32g -Xmx32g"
+      - "discovery.zen.ping.unicast.hosts=[master1, master2, master3]"
+      - node.data=false
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+     - 8200:9200
+    networks:
+      - esnet
+
+  master3:
+    image: my-repo/elasticsearch:5.4.0
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms32g -Xmx32g"
+      - "discovery.zen.ping.unicast.hosts=[master1, master2, master3]"
+      - node.data=false
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+     - 7200:9200
+    networks:
+      - esnet
+
+  slave1:
+    image: my-repo/elasticsearch:5.4.0
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms32g -Xmx32g"
+      - "discovery.zen.ping.unicast.hosts=[master1, master2, master3]"
+      - node.master=false
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - esnet
+
+  slave2:
+    image: my-repo/elasticsearch:5.4.0
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms32g -Xmx32g"
+      - "discovery.zen.ping.unicast.hosts=[master1, master2, master3]"
+      - node.master=false
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - esnet
+
+  slave3:
+    image: my-repo/elasticsearch:5.4.0
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms32g -Xmx32g"
+      - "discovery.zen.ping.unicast.hosts=[master1, master2, master3]"
+      - node.master=false
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - esnet
